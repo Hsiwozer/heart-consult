@@ -1,17 +1,49 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "uni-app"
-			}
-		}
-	],
+            "path" : "pages/knowledge/knowledge",
+            "style" :{}
+            
+        }
+        ,{
+            "path" : "pages/consult/consult",
+            "style" :{}
+            
+        }
+        ,{
+            "path" : "pages/my/my",
+            "style" :{}
+            
+        }
+    ],
+    "tabBar": {
+      "selectedColor": "#00c365",
+      "list": [
+        {
+          "pagePath": "pages/knowledge/knowledge",
+          "text": "知识",
+          "iconPath": "static/tab_icons/zhishiku.png",
+          "selectedIconPath": "static/tab_icons/zhishiku-active.png"
+        },
+        {
+          "pagePath": "pages/consult/consult",
+          "text": "问诊",
+          "iconPath": "static/tab_icons/aixin.png",
+          "selectedIconPath": "static/tab_icons/aixin-active.png"
+        },
+        {
+          "pagePath": "pages/my/my",
+          "text": "我的",
+          "iconPath": "static/tab_icons/my.png",
+          "selectedIconPath": "static/tab_icons/my-active.png"
+        }
+      ]
+    },
 	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "读心专家",
+		"navigationBarBackgroundColor": "#00c365",
+		"backgroundColor": "#ffffff"
 	},
 	"uniIdRouter": {}
 }
