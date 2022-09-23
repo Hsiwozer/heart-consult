@@ -1,44 +1,67 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-            "path" : "pages/knowledge/knowledge",
-            "style" :{}
-            
-        }
-        ,{
-            "path" : "pages/consult/consult",
-            "style" :{}
-            
-        }
-        ,{
-            "path" : "pages/my/my",
-            "style" :{}
-            
-        }
-    ],
-    "tabBar": {
-      "selectedColor": "#00c365",
-      "list": [
+      "path" : "pages/knowledge/knowledge",
+      "style" :{}
+        
+    }
+    ,{
+      "path" : "pages/consult/consult",
+      "style" :{}
+        
+    }
+    ,{
+      "path" : "pages/my/my",
+      "style" :{}
+        
+    }
+  ],
+  "subPackages": [
+    {
+      "root": "subpkg",
+      "pages": [
         {
-          "pagePath": "pages/knowledge/knowledge",
-          "text": "知识",
-          "iconPath": "static/tab_icons/zhishiku.png",
-          "selectedIconPath": "static/tab_icons/zhishiku-active.png"
+          "path": "knowledge_detail/knowledge_detail",
+          "style": {}
         },
         {
-          "pagePath": "pages/consult/consult",
-          "text": "问诊",
-          "iconPath": "static/tab_icons/aixin.png",
-          "selectedIconPath": "static/tab_icons/aixin-active.png"
+          "path": "knowledge_list/knowledge_list",
+          "style": {}
         },
         {
-          "pagePath": "pages/my/my",
-          "text": "我的",
-          "iconPath": "static/tab_icons/my.png",
-          "selectedIconPath": "static/tab_icons/my-active.png"
+          "path": "longpic_detail/longpic_detail",
+          "style": {}
+        },
+        {
+          "path": "video_list/video_list",
+          "style": {}
         }
       ]
-    },
+    }
+  ],
+  "tabBar": {
+    "selectedColor": "#00c365",
+    "list": [
+      {
+        "pagePath": "pages/knowledge/knowledge",
+        "text": "知识",
+        "iconPath": "static/tab_icons/zhishiku.png",
+        "selectedIconPath": "static/tab_icons/zhishiku-active.png"
+      },
+      {
+        "pagePath": "pages/consult/consult",
+        "text": "问诊",
+        "iconPath": "static/tab_icons/aixin.png",
+        "selectedIconPath": "static/tab_icons/aixin-active.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "static/tab_icons/my.png",
+        "selectedIconPath": "static/tab_icons/my-active.png"
+      }
+    ]
+  },
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "读心专家",
