@@ -3,6 +3,7 @@
     "@escook/request-miniprogram": "^0.2.1",
     "express": "^4.18.1",
     "mysql2": "^2.3.3",
-    "vant": "^3.6.2"
+    "vant": "^3.6.2",
+    "vuex": "^4.0.2"
   }
 }

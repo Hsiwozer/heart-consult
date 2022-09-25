@@ -42,21 +42,9 @@
       <text>知识广场</text>
       <!-- 知识卡片 -->
       <view class="know_card">
-        <view class="know_item">
-          <view class="ask">冠状动脉粥样硬化性心脏病的饮食禁忌</view>
-          <view class="answer">冠状动脉粥样硬化性心脏病，简称冠心病。建议患者应该避免大量进食高能量、高脂肪的食物，如肥肉、黄油、莜麦面、核桃等。大量进食油腻的食物，会增加血栓形成的风险，对冠心病患者有不好的影响。同时蛋白质的摄入也应该适量，不可过度的摄入，以免加重心脏的负担。此外，平时的饮食应该清淡，不建议大量进食生冷、辛辣刺激的食物，尤其是烈酒等。需要注意的是，饮食调理仅仅只是滨病治疗的一个环节，日常生活中如有不适建议积极就医咨询。医生会根据您的具体情况，制定恰当的治疗方案，同时给予您合理的饮食建议。</view>
-        </view>
-        <view class="know_item">
-          <view class="ask">冠状动脉粥样硬化性心脏病的饮食禁忌</view>
-          <view class="answer">冠状动脉粥样硬化性心脏病，简称冠心病。建议患者应该避免大量进食高能量、高脂肪的食物，如肥肉、黄油、莜麦面、核桃等。大量进食油腻的食物，会增加血栓形成的风险，对冠心病患者有不好的影响。同时蛋白质的摄入也应该适量，不可过度的摄入，以免加重心脏的负担。此外，平时的饮食应该清淡，不建议大量进食生冷、辛辣刺激的食物，尤其是烈酒等。需要注意的是，饮食调理仅仅只是滨病治疗的一个环节，日常生活中如有不适建议积极就医咨询。医生会根据您的具体情况，制定恰当的治疗方案，同时给予您合理的饮食建议。</view>
-        </view>
-        <view class="know_item">
-          <view class="ask">冠状动脉粥样硬化性心脏病的饮食禁忌</view>
-          <view class="answer">冠状动脉粥样硬化性心脏病，简称冠心病。建议患者应该避免大量进食高能量、高脂肪的食物，如肥肉、黄油、莜麦面、核桃等。大量进食油腻的食物，会增加血栓形成的风险，对冠心病患者有不好的影响。同时蛋白质的摄入也应该适量，不可过度的摄入，以免加重心脏的负担。此外，平时的饮食应该清淡，不建议大量进食生冷、辛辣刺激的食物，尤其是烈酒等。需要注意的是，饮食调理仅仅只是滨病治疗的一个环节，日常生活中如有不适建议积极就医咨询。医生会根据您的具体情况，制定恰当的治疗方案，同时给予您合理的饮食建议。</view>
-        </view>
-        <view class="know_item">
-          <view class="ask">冠状动脉粥样硬化性心脏病的饮食禁忌</view>
-          <view class="answer">冠状动脉粥样硬化性心脏病，简称冠心病。建议患者应该避免大量进食高能量、高脂肪的食物，如肥肉、黄油、莜麦面、核桃等。大量进食油腻的食物，会增加血栓形成的风险，对冠心病患者有不好的影响。同时蛋白质的摄入也应该适量，不可过度的摄入，以免加重心脏的负担。此外，平时的饮食应该清淡，不建议大量进食生冷、辛辣刺激的食物，尤其是烈酒等。需要注意的是，饮食调理仅仅只是滨病治疗的一个环节，日常生活中如有不适建议积极就医咨询。医生会根据您的具体情况，制定恰当的治疗方案，同时给予您合理的饮食建议。</view>
+        <view class="know_item" v-for="(item, index) in knowledgeList" :key="index" @click="gotoKnowledgeDetail(item)">
+          <view class="ask">{{item.question}}</view>
+          <view class="answer">{{item.answer}}</view>
         </view>
       </view>
       <!-- 查看更多知识卡片按钮 -->
@@ -70,11 +58,11 @@
   export default {
     data() {
       return {
-        videoList: []
+        knowledgeList: []
       };
     },
     onLoad() {
-      this.getVideoList()
+      this.getKnowledgeList()
     },
     methods: {
       gotoVideoList() {
@@ -92,12 +80,25 @@
           url: '/subpkg/knowledge_list/knowledge_list'
         })
       },
-      async getVideoList() {
-        const {data: res} = await uni.request({
-          url: 'http://localhost:8080/api/video_list/get'
+      gotoKnowledgeDetail(item) {
+        uni.navigateTo({
+          url: '/subpkg/knowledge_detail/knowledge_detail',
+          success: (res) => {
+            res.eventChannel.emit('dataFromKnowledgePage', {data: item})
+          }
         })
-        this.videoList = res.data
-        console.log(videoList);
+        
+      },
+      async getKnowledgeList() {
+        const { data: res } = await uni.$http.get('/api/knowledge_list/get?pagenum=1&pagesize=3')
+        if(res.status !== 0) {
+          return uni.showToast({
+            title: '数据请求失败！',
+            duration: 1500,
+            icon: 'none'
+          })
+        }
+        this.knowledgeList = res.data.message
       }
     }
   }
@@ -185,7 +186,7 @@
     
     .morecard {
       height: 80rpx;
-      background-color: pink;
+      background-color: #60ba77;
       border-radius: 20px;
       text-align: center;
       line-height: 80rpx;

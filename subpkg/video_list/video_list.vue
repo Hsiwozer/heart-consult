@@ -1,40 +1,7 @@
 <template>
   <view class="video_list_container">
-    <view class="video_item">
-      <view class="play">
-        <image src="../../static/play.png"></image>
-      </view>
-      <image src="/static/video_list/pic1.jpg"></image>
-    </view>
-    <view class="video_item">
-      <view class="play">
-        <image src="../../static/play.png"></image>
-      </view>
-      <image src="/static/video_list/pic2.jpg"></image>
-    </view>
-    <view class="video_item">
-      <view class="play">
-        <image src="../../static/play.png"></image>
-      </view>
-      <image src="/static/video_list/pic3.jpg"></image>
-    </view>
-    <view class="video_item">
-      <view class="play">
-        <image src="../../static/play.png"></image>
-      </view>
-      <image src="/static/video_list/pic4.jpg"></image>
-    </view>
-    <view class="video_item">
-      <view class="play">
-        <image src="../../static/play.png"></image>
-      </view>
-      <image src="/static/video_list/pic5.jpg"></image>
-    </view>
-    <view class="video_item">
-      <view class="play">
-        <image src="../../static/play.png"></image>
-      </view>
-      <image src="/static/video_list/pic6.jpg"></image>
+    <view class="video_item" v-for="(item, index) in videoList" :key="index">
+      <video :src="item.video_address" :poster="item.pic_address" play-btn-position="center" object-fit="fill" show-mute-btn enable-play-gesture controls></video>
     </view>
   </view>
 </template>
@@ -43,8 +10,25 @@
   export default {
     data() {
       return {
-        
+        videoList: [],
+        play: true
       };
+    },
+    onLoad() {
+      this.getVideoList()
+    },
+    methods: {
+      async getVideoList() {
+        const { data: res } = await uni.$http.get('/api/video_list/get')
+        if(res.status !== 0) {
+          return uni.showToast({
+            title: '数据请求失败！',
+            duration: 1500,
+            icon: 'none'
+          })
+        }
+        this.videoList = res.data
+      }
     }
   }
 </script>
@@ -61,21 +45,7 @@
     margin-bottom: 10px;
     position: relative;
     
-    .play {
-      width: 80rpx;
-      height: 80rpx;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      
-      image {
-        width: 100%;
-        height: 100%;
-      }
-    }
-    
-    image {
+    video {
       width: 100%;
       height: 100%;
     }
