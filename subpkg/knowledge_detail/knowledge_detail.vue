@@ -1,7 +1,7 @@
 <template>
   <view class="knowledge_detail_container">
-    <text class="question">{{question}}</text>
-    <text class="answer">{{answer}}</text>
+    <text class="question">{{knowledge.question}}</text>
+    <text class="answer">{{knowledge.answer}}</text>
   </view>
 </template>
 
@@ -9,17 +9,25 @@
   export default {
     data() {
       return {
-        question: '',
-        answer: ''
+        knowledge: []
       };
     },
-    async onLoad(options) {
-      const eventChannel = this.getOpenerEventChannel();
-      eventChannel.on('dataFromKnowledgePage',  await function({data: res}) {
-        console.log(res);
-        this.question = res.question
-        this.answer = res.answer
-      })
+    onLoad(options) {
+      // console.log(options.id);
+      this.getKnowledgeDetail(options.id)
+    },
+    methods: {
+      async getKnowledgeDetail(id) {
+        const { data: res } = await uni.$http.get(`/api/knowledge_detail/get?id=${id}`)
+        if(res.status !== 0) {
+          return uni.showToast({
+            title: '数据请求失败！',
+            duration: 1500,
+            icon: 'none'
+          })
+        }
+        this.knowledge = res.data[0]
+      }
     }
   }
 </script>

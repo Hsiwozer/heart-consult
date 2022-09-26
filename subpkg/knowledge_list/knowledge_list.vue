@@ -1,7 +1,7 @@
 <template>
   <view class="knowledge_list_container">
     <view class="know_card">
-      <view class="know_item" v-for="(item, index) in knowledgeList" :key="index" @click="gotoKnowledgeDetail">
+      <view class="know_item" v-for="(item, index) in knowledgeList" :key="index" @click="gotoKnowledgeDetail(item.id)">
         <view class="ask">{{item.question}}</view>
         <view class="answer">{{item.answer}}</view>
       </view>
@@ -35,9 +35,9 @@
         }
         this.knowledgeList = [...this.knowledgeList, ...res.data.message]
       },
-      gotoKnowledgeDetail() {
+      gotoKnowledgeDetail(id) {
         uni.navigateTo({
-          url: '/subpkg/knowledge_detail/knowledge_detail'
+          url: `/subpkg/knowledge_detail/knowledge_detail?id=${id}`
         })
       }
     },

@@ -32,4 +32,16 @@ router.get('/knowledge_list/get', (req, res) => {
   })
 })
 
+router.get('/knowledge_detail/get', (req, res) => {
+  const sqlStr = `select * from knowledge_list where id=${req.query.id}`
+  db.query(sqlStr, (err, results) => {
+    if(err) return console.log(err.message);
+    res.send({
+      status: 0,
+      msg: 'GET 请求成功！',
+      data: results
+    })
+  })
+})
+
 module.exports = router

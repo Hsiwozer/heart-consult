@@ -42,7 +42,7 @@
       <text>知识广场</text>
       <!-- 知识卡片 -->
       <view class="know_card">
-        <view class="know_item" v-for="(item, index) in knowledgeList" :key="index" @click="gotoKnowledgeDetail(item)">
+        <view class="know_item" v-for="(item, index) in knowledgeList" :key="index" @click="gotoKnowledgeDetail(item.id)">
           <view class="ask">{{item.question}}</view>
           <view class="answer">{{item.answer}}</view>
         </view>
@@ -80,14 +80,10 @@
           url: '/subpkg/knowledge_list/knowledge_list'
         })
       },
-      gotoKnowledgeDetail(item) {
+      gotoKnowledgeDetail(id){
         uni.navigateTo({
-          url: '/subpkg/knowledge_detail/knowledge_detail',
-          success: (res) => {
-            res.eventChannel.emit('dataFromKnowledgePage', {data: item})
-          }
+          url: `/subpkg/knowledge_detail/knowledge_detail?id=${id}`
         })
-        
       },
       async getKnowledgeList() {
         const { data: res } = await uni.$http.get('/api/knowledge_list/get?pagenum=1&pagesize=3')
