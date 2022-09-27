@@ -2,6 +2,9 @@ const express = require('express')
 const router = express.Router()
 const db = require('./config')
 
+const jwt = require('jsonwebtoken')
+const expressJWT = require('express-jwt')
+
 router.get('/video_list/get', (req, res) => {
   const sqlStr = 'select * from video_list'
   db.query(sqlStr, (err, results) => {
@@ -41,6 +44,25 @@ router.get('/knowledge_detail/get', (req, res) => {
       msg: 'GET 请求成功！',
       data: results
     })
+  })
+})
+
+router.post('/users/wxlogin', (req, res) => {
+  const userinfo = req.body
+  if(!userinfo.code) return res.send({ status: 1, msg: '请求失败！' })
+  const secretKey = userinfo.code
+  // app.use(expressJWT({ secret: secretKey, algorithms: ['HS256'] }).unless({ path: [/^\/api\//] }) )
+  const info = {
+    encryptedData: userinfo.encryptedData,
+    rawData: userinfo.rawData,
+    iv: userinfo.iv,
+    signature: userinfo.signature
+  }
+  const tokenStr = jwt.sign(info, secretKey, { expiresIn: '24h' })
+  res.send({
+    status: 0,
+    msg: 'POST 请求成功！',
+    token: tokenStr
   })
 })
 

@@ -36,6 +36,7 @@
 <style lang="scss">
   .video_list_container {
     padding: 15px;
+    background-color: #f8f8f8;
   }
   
   .video_item {

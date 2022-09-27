@@ -42,9 +42,10 @@
       <text>知识广场</text>
       <!-- 知识卡片 -->
       <view class="know_card">
-        <view class="know_item" v-for="(item, index) in knowledgeList" :key="index" @click="gotoKnowledgeDetail(item.id)">
+        <view class="know_item" v-for="(item, index) in knowledgeListNotadd" :key="index" @click="gotoKnowledgeDetail(item.id)">
           <view class="ask">{{item.question}}</view>
           <view class="answer">{{item.answer}}</view>
+          <my-interaction :knowledge="item"></my-interaction>
         </view>
       </view>
       <!-- 查看更多知识卡片按钮 -->
@@ -55,16 +56,21 @@
 </template>
 
 <script>
+  import { mapState, mapMutations } from 'vuex'
   export default {
     data() {
       return {
-        knowledgeList: []
+        // knowledgeList: []
       };
+    },
+    computed: {
+      ...mapState('m_knowledge', ['knowledgeListNotadd'])
     },
     onLoad() {
       this.getKnowledgeList()
     },
     methods: {
+      ...mapMutations('m_knowledge', ['updateKnowledgeListNotadd']),
       gotoVideoList() {
         uni.navigateTo({
           url: '/subpkg/video_list/video_list'
@@ -94,7 +100,8 @@
             icon: 'none'
           })
         }
-        this.knowledgeList = res.data.message
+        // this.knowledgeList = res.data.message
+        this.updateKnowledgeListNotadd(res.data.message)
       }
     }
   }
@@ -103,6 +110,7 @@
 <style lang="scss">
   .knowledge-container {
     padding-bottom: 5px;
+    background-color: #f8f8f8;
   }
   
   .swiper-item {
@@ -157,7 +165,7 @@
       
       .know_item {
         height: 220rpx;
-        background-color: #e5fdf0;
+        background-color: #fff;
         margin-bottom: 5px;
         padding: 15px;
         border-radius: 8px;

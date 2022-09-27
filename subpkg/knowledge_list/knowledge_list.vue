@@ -1,26 +1,32 @@
 <template>
   <view class="knowledge_list_container">
     <view class="know_card">
-      <view class="know_item" v-for="(item, index) in knowledgeList" :key="index" @click="gotoKnowledgeDetail(item.id)">
+      <view class="know_item" v-for="(item, index) in knowledgeListWantadd" :key="index" @click="gotoKnowledgeDetail(item.id)">
         <view class="ask">{{item.question}}</view>
         <view class="answer">{{item.answer}}</view>
+        <my-interaction :knowledge="item"></my-interaction>
       </view>
     </view>
   </view>
 </template>
 
 <script>
+  import { mapState, mapMutations } from 'vuex'
   export default {
     data() {
       return {
         isLoading: false,
-        knowledgeList: []
+        // knowledgeList: []
       };
+    },
+    computed: {
+      ...mapState('m_knowledge', ['knowledgeListWantadd'])
     },
     onLoad() {
       this.getKnowledgeList()
     },
     methods: {
+      ...mapMutations('m_knowledge', ['updateKnowledgeListWantadd']),
       async getKnowledgeList(cb) {
         this.isloading = true
         const { data: res } = await uni.$http.get('/api/knowledge_list/get?pagenum=1&pagesize=6')
@@ -33,7 +39,9 @@
             icon: 'none'
           })
         }
-        this.knowledgeList = [...this.knowledgeList, ...res.data.message]
+        this.updateKnowledgeListWantadd(res.data.message)
+        // this.updateKnowledgeList([...knowledgeList, ...res.data.message])
+        // this.knowledgeList = [...this.knowledgeList, ...res.data.message]
       },
       gotoKnowledgeDetail(id) {
         uni.navigateTo({
@@ -56,16 +64,21 @@
 </script>
 
 <style lang="scss">
+  page {
+    background-color: #f8f8f8;
+  }
   .knowledge_list_container {
     margin-top: 15px;
     padding: 0 10px;
+    background-color: #f8f8f8;
+    background-color: #f8f8f8;
     
    .know_card {
      margin-top: 10px;
      
      .know_item {
        height: 220rpx;
-       background-color: #e5fdf0;
+       background-color: #fff;
        margin-bottom: 5px;
        padding: 15px;
        border-radius: 8px;
@@ -85,6 +98,8 @@
          overflow: hidden;
          text-overflow: ellipsis;
        }
+       
+       
      }
    } 
   }

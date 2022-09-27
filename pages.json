@@ -3,17 +3,14 @@
 		{
       "path" : "pages/knowledge/knowledge",
       "style" :{}
-        
     }
     ,{
       "path" : "pages/consult/consult",
       "style" :{}
-        
     }
     ,{
       "path" : "pages/my/my",
       "style" :{}
-        
     }
   ],
   "subPackages": [
@@ -22,7 +19,7 @@
       "pages": [
         {
           "path": "knowledge_detail/knowledge_detail",
-          "style": {}
+          "style" :{}
         },
         {
           "path": "knowledge_list/knowledge_list",
@@ -34,13 +31,50 @@
         },
         {
           "path": "longpic_detail/longpic_detail",
-          "style": {}
+          "style" :{}
         },
         {
           "path": "video_list/video_list",
-          "style": {}
+          "style" :{}
         }
-      ]
+          ,{
+                    "path" : "setting_detail/setting_detail",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                ,{
+                    "path" : "like_detail/like_detail",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                ,{
+                    "path" : "collect_detail/collect_detail",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                
+                ,{
+                    "path" : "foot_detail/foot_detail",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+            ]
     }
   ],
   "tabBar": {
