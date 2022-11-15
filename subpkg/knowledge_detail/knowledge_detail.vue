@@ -2,6 +2,8 @@
   <view class="knowledge_detail_container">
     <text class="question">{{knowledge.question}}</text>
     <text class="answer">{{knowledge.answer}}</text>
+    <!-- 点赞收藏按钮 -->
+    <my-clickSC :kno="knowledge"></my-clickSC>
   </view>
 </template>
 
@@ -9,7 +11,7 @@
   export default {
     data() {
       return {
-        knowledge: []
+        knowledge: [],
       };
     },
     onLoad(options) {

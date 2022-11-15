@@ -14,8 +14,8 @@ app.use(express.urlencoded({ extended: false }))
 // })
 
 const router = require('./apiRouter')
-app.use('/api' ,router)
+app.use('/api', router)
 
 app.listen(8080, () => {
-  console.log('Server runing at http://localhost:8080');
+  console.log('Server runing successfully!');
 })

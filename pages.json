@@ -2,7 +2,11 @@
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
       "path" : "pages/knowledge/knowledge",
-      "style" :{}
+      "style": {
+        "onReachBottomDistance": 150,
+        "enablePullDownRefresh": true,
+        "backgroundColor": "#F8F8F8"
+      }
     }
     ,{
       "path" : "pages/consult/consult",
@@ -20,14 +24,6 @@
         {
           "path": "knowledge_detail/knowledge_detail",
           "style" :{}
-        },
-        {
-          "path": "knowledge_list/knowledge_list",
-          "style": {
-            "onReachBottomDistance": 150,
-            "enablePullDownRefresh": true,
-            "backgroundColor": "#F8F8F8"
-          }
         },
         {
           "path": "longpic_detail/longpic_detail",

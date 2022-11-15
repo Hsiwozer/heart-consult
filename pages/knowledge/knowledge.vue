@@ -42,14 +42,12 @@
       <text>知识广场</text>
       <!-- 知识卡片 -->
       <view class="know_card">
-        <view class="know_item" v-for="(item, index) in knowledgeListNotadd" :key="index" @click="gotoKnowledgeDetail(item.id)">
+        <view class="know_item" v-for="(item, index) in knowledgeList" :key="index" @click="gotoKnowledgeDetail(item.id)">
           <view class="ask">{{item.question}}</view>
           <view class="answer">{{item.answer}}</view>
-          <my-interaction :knowledge="item"></my-interaction>
+          <my-interaction></my-interaction>
         </view>
       </view>
-      <!-- 查看更多知识卡片按钮 -->
-      <view class="morecard" @click="gotoKnowledgeList">查看更多</view>
     </view>
     
   </view>
@@ -60,17 +58,26 @@
   export default {
     data() {
       return {
+        isLoading: false,
         // knowledgeList: []
       };
     },
     computed: {
-      ...mapState('m_knowledge', ['knowledgeListNotadd'])
+      ...mapState('m_knowledge', ['knowledgeList'])
     },
+    // computed: {
+    //   knowledgeList: {
+    //     get() {
+    //       return this.$store.knowledgeList
+    //     },
+    //     set(){}
+    //   }
+    // },
     onLoad() {
       this.getKnowledgeList()
     },
     methods: {
-      ...mapMutations('m_knowledge', ['updateKnowledgeListNotadd']),
+      ...mapMutations('m_knowledge', ['updateKnowledgeList']),
       gotoVideoList() {
         uni.navigateTo({
           url: '/subpkg/video_list/video_list'
@@ -81,18 +88,16 @@
           url: '/subpkg/longpic_detail/longpic_detail'
         })
       },
-      gotoKnowledgeList() {
-        uni.navigateTo({
-          url: '/subpkg/knowledge_list/knowledge_list'
-        })
-      },
       gotoKnowledgeDetail(id){
         uni.navigateTo({
           url: `/subpkg/knowledge_detail/knowledge_detail?id=${id}`
         })
       },
-      async getKnowledgeList() {
-        const { data: res } = await uni.$http.get('/api/knowledge_list/get?pagenum=1&pagesize=3')
+      async getKnowledgeList(cb) {
+        this.isloading = true
+        const { data: res } = await uni.$http.get('/api/knowledge_list/get?pagenum=1&pagesize=6')
+        this.isloading = false
+        cb && cb()
         if(res.status !== 0) {
           return uni.showToast({
             title: '数据请求失败！',
@@ -100,8 +105,18 @@
             icon: 'none'
           })
         }
-        // this.knowledgeList = res.data.message
-        this.updateKnowledgeListNotadd(res.data.message)
+        this.updateKnowledgeList(res.data.message)
+      },
+      onReachBottom() {
+        if (this.isloading) return
+        this.getKnowledgeList()
+      },
+      onPullDownRefresh() {
+        this.isloading = false
+        this.knowledgeList = []
+        this.getKnowledgeList(() => {
+          uni.stopPullDownRefresh()
+        })
       }
     }
   }
