@@ -3,7 +3,7 @@
     <text class="question">{{knowledge.question}}</text>
     <text class="answer">{{knowledge.answer}}</text>
     <!-- 点赞收藏按钮 -->
-    <my-clickSC :kno="knowledge"></my-clickSC>
+    <my-clickSC :intSC="[knowledge.liked, knowledge.collected, knowledge.id]"></my-clickSC>
   </view>
 </template>
 
@@ -11,6 +11,7 @@
   export default {
     data() {
       return {
+        id: 0,
         knowledge: [],
       };
     },
@@ -29,8 +30,15 @@
           })
         }
         this.knowledge = res.data[0]
+        this.id = id
       }
-    }
+    },
+    // watch: {
+    //   knowledge(newVal, oldVal) {
+    //     // if(newVal === oldVal) return
+    //     this.getKnowledgeDetail(this.id)
+    //   }
+    // }
   }
 </script>
 

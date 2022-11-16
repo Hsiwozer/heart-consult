@@ -11,5 +11,9 @@ export default {
     }
   },
   
-  getters: {}
+  getters: {
+    showKnowledgeList: state => {
+      return state.knowledgeList
+    }
+  }
 }

@@ -45,7 +45,7 @@
         <view class="know_item" v-for="(item, index) in knowledgeList" :key="index" @click="gotoKnowledgeDetail(item.id)">
           <view class="ask">{{item.question}}</view>
           <view class="answer">{{item.answer}}</view>
-          <my-interaction></my-interaction>
+          <my-interaction :intSC="[item.liked, item.collected]"></my-interaction>
         </view>
       </view>
     </view>
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-  import { mapState, mapMutations } from 'vuex'
+  import { mapState, mapMutations, mapGetters } from 'vuex'
   export default {
     data() {
       return {
@@ -63,16 +63,14 @@
       };
     },
     computed: {
-      ...mapState('m_knowledge', ['knowledgeList'])
+      ...mapGetters('m_knowledge', ['showKnowledgeList']),
+      knowledgeList: {
+        get() {
+          return this.showKnowledgeList
+        },
+        set(){}
+      }
     },
-    // computed: {
-    //   knowledgeList: {
-    //     get() {
-    //       return this.$store.knowledgeList
-    //     },
-    //     set(){}
-    //   }
-    // },
     onLoad() {
       this.getKnowledgeList()
     },

@@ -3,15 +3,15 @@
     <!-- 点赞收藏数量模块 -->
     <view class="interaction">
       <view class="like">
-        <uni-icons type="hand-up" size="15" v-if="knowledgeList.liked"></uni-icons>
+        <uni-icons type="hand-up" size="15" v-if="!intSC[0]"></uni-icons>
         <uni-icons type="hand-up-filled" size="15" color="#3c6ba3" v-else></uni-icons>
         
         <!-- 在点赞图标下显示点赞数量 -->
         <!-- <text class="starBtn" @click="changeStarNum">{{knowledge.starnum}}</text> -->
       </view>
       <view class="collect">
-        <uni-icons type="star" size="15"></uni-icons>
-        <!-- <uni-icons type="star-filled" size="15" color="#ffdb00"></uni-icons> -->
+        <uni-icons type="star" size="15" v-if="!intSC[1]"></uni-icons>
+        <uni-icons type="star-filled" size="15" color="#ffdb00" v-else></uni-icons>
         
         <!-- 在收藏图标下显示收藏数量 -->
         <!-- <text class="collectBtn" @click="changeCollectNum">{{knowledge.collectnum}}</text> -->
@@ -29,6 +29,7 @@
         
       };
     },
+    props: ["intSC"],
     computed: {
       ...mapState('m_knowledge', ['knowledgeList'])
     }

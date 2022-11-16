@@ -67,19 +67,22 @@ router.get('/scales/get', (req, res) => {
 //   const sqlStr = 'select * from knowledge_list where id=?'
 // })
 
-// 获取用户点赞收藏足迹记录的 API
-// router.get('/interaction', (req, res) => {
-//   const sqlStr = `select * from interaction_list`
-//   // const query = [req.query.liked, req.query.collected, req.query.footed]
-//   db.query(sqlStr, (err, results) => {
-//     if(err) return console.log(err.message);
-//     res.send({
-//       status: 0,
-//       msg: 'GET 请求成功！',
-//       data: results
-//     })
-//   })
-// })
+// 获取用户点赞行为的 API
+router.post('/interaction', (req, res) => {
+  const sqlStr = 'update knowledge_list set liked=? where id=?'
+  let like = (req.query.liked - 1) * (req.query.liked - 1)
+  // console.log(req.query.liked);
+  // console.log(like);
+  const query = [like, req.query.id]
+  db.query(sqlStr, query, (err, results) => {
+    if(err) return console.log(err.message);
+    res.send({
+      status: 0,
+      msg: 'GET 请求成功！',
+      data: results
+    })
+  })
+})
 
 // 获取登录 token 的 API
 router.post('/users/wxlogin', (req, res) => {
