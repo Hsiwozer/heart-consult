@@ -37,7 +37,6 @@ router.get('/knowledge_list/get', (req, res) => {
 
 // 获取知识详情的 API
 router.get('/knowledge_detail/get', (req, res) => {
-  // const sqlStr = `select * from knowledge_list where id=${req.query.id}`
   const sqlStr = 'select * from knowledge_list where id=?'
   db.query(sqlStr, req.query.id, (err, results) => {
     if(err) return console.log(err.message);
@@ -67,13 +66,40 @@ router.get('/scales/get', (req, res) => {
 //   const sqlStr = 'select * from knowledge_list where id=?'
 // })
 
-// 获取用户点赞行为的 API
-router.post('/interaction', (req, res) => {
-  const sqlStr = 'update knowledge_list set liked=? where id=?'
+// 修改用户点赞行为的 API
+router.post('/interaction/like', (req, res) => {
+  const sqlStr = 'update knowledge_list set liked=?, footTime=? where id=?'
   let like = (req.query.liked - 1) * (req.query.liked - 1)
-  // console.log(req.query.liked);
-  // console.log(like);
-  const query = [like, req.query.id]
+  const query = [like, req.query.footTime, req.query.id]
+  db.query(sqlStr, query, (err, results) => {
+    if(err) return console.log(err.message);
+    res.send({
+      status: 0,
+      msg: 'GET 请求成功！',
+      data: results
+    })
+  })
+})
+
+// 修改用户收藏行为的 API
+router.post('/interaction/collect', (req, res) => {
+  const sqlStr = 'update knowledge_list set collected=?, footTime=? where id=?'
+  let collect = (req.query.collected - 1) * (req.query.collected - 1)
+  const query = [collect, req.query.footTime, req.query.id]
+  db.query(sqlStr, query, (err, results) => {
+    if(err) return console.log(err.message);
+    res.send({
+      status: 0,
+      msg: 'GET 请求成功！',
+      data: results
+    })
+  })
+})
+
+// 修改用户足迹行为（即是否浏览过该文章）的 API
+router.post('/interaction/foot', (req, res) => {
+  const sqlStr = 'update knowledge_list set footed=1, footTime=? where id=?'
+  const query = [req.query.footTime, req.query.id]
   db.query(sqlStr, query, (err, results) => {
     if(err) return console.log(err.message);
     res.send({
@@ -101,6 +127,45 @@ router.post('/users/wxlogin', (req, res) => {
     status: 0,
     msg: 'POST 请求成功！',
     token: tokenStr
+  })
+})
+
+// 获取用户点赞文章列表
+router.get('/like/get', (req, res) => {
+  const sqlStr = 'select * from knowledge_list where liked=1 order by footTime DESC'
+  db.query(sqlStr, (err, results) => {
+    if(err) return console.log(err.message);
+    res.send({
+      status: 0,  // 0成功，1失败
+      msg: 'GET 请求成功！',
+      data: results
+    })
+  })
+})
+
+// 获取用户收藏文章列表
+router.get('/collect/get', (req, res) => {
+  const sqlStr = 'select * from knowledge_list where collected=1 order by footTime DESC'
+  db.query(sqlStr, (err, results) => {
+    if(err) return console.log(err.message);
+    res.send({
+      status: 0,  // 0成功，1失败
+      msg: 'GET 请求成功！',
+      data: results
+    })
+  })
+})
+
+// 获取用户浏览过（足迹）文章列表
+router.get('/foot/get', (req, res) => {
+  const sqlStr = 'select * from knowledge_list where footed=1 order by footTime DESC'
+  db.query(sqlStr, (err, results) => {
+    if(err) return console.log(err.message);
+    res.send({
+      status: 0,  // 0成功，1失败
+      msg: 'GET 请求成功！',
+      data: results
+    })
   })
 })
 

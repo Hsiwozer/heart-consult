@@ -5,7 +5,7 @@
         <uni-icons type="hand-up" size="30" v-if="!intSC[0]"></uni-icons>
         <uni-icons type="hand-up-filled" size="30" color="#3c6ba3" v-else></uni-icons>
       </view>
-      <view class="collect" @click="changeCollectStatus">
+      <view class="collect" @click="changeCollectStatus(intSC[1], intSC[2])">
         <uni-icons type="star" size="30" v-if="!intSC[1]"></uni-icons>
         <uni-icons type="star-filled" size="30" color="#ffdb00" v-else></uni-icons>
       </view>
@@ -24,7 +24,9 @@
     props: ["intSC"],
     methods: {
       async changeStarStatus(liked, id) {
-        const { data: res } = await uni.$http.post(`/api/interaction?liked=${liked}&id=${id}`)
+        const dayjs = require("dayjs")
+        let curDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
+        const { data: res } = await uni.$http.post(`/api/interaction/like?liked=${liked}&footTime=${curDate}&id=${id}`)
         if(res.status !== 0) {
           return uni.showToast({
             title: '数据请求失败！',
@@ -33,8 +35,17 @@
           })
         }
       },
-      changeCollectStatus() {
-        this.isCollected = !this.isCollected
+      async changeCollectStatus(collected, id) {
+        const dayjs = require("dayjs")
+        let curDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
+        const { data: res } = await uni.$http.post(`/api/interaction/collect?collected=${collected}&footTime=${curDate}&id=${id}`)
+        if(res.status !== 0) {
+          return uni.showToast({
+            title: '数据请求失败！',
+            duration: 1500,
+            icon: 'none'
+          })
+        }
       }
     }
   }

@@ -75,7 +75,7 @@
       this.getKnowledgeList()
     },
     methods: {
-      ...mapMutations('m_knowledge', ['updateKnowledgeList']),
+      ...mapMutations('m_knowledge', ['updateKnowledgeList', 'clearKnowledgeList']),
       gotoVideoList() {
         uni.navigateTo({
           url: '/subpkg/video_list/video_list'
@@ -90,6 +90,9 @@
         uni.navigateTo({
           url: `/subpkg/knowledge_detail/knowledge_detail?id=${id}`
         })
+        const dayjs = require("dayjs")
+        let curDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
+        uni.$http.post(`/api/interaction/foot?id=${id}&footTime=${curDate}`)
       },
       async getKnowledgeList(cb) {
         this.isloading = true
@@ -111,7 +114,7 @@
       },
       onPullDownRefresh() {
         this.isloading = false
-        this.knowledgeList = []
+        this.clearKnowledgeList()
         this.getKnowledgeList(() => {
           uni.stopPullDownRefresh()
         })

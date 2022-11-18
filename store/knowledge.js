@@ -8,6 +8,9 @@ export default {
   mutations: {
     updateKnowledgeList(state, knowledgeList) {
       state.knowledgeList = [...state.knowledgeList, ...knowledgeList]
+    },
+    clearKnowledgeList(state) {
+      state.knowledgeList = []
     }
   },
   
