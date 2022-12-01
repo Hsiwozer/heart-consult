@@ -9,11 +9,11 @@
     <!-- 关于、联系 -->
     <view class="detail-list">
       <view class="detail-item">
-        <text>关于我们</text>
+        <text>意见反馈</text>
         <uni-icons type="right" size="15"></uni-icons>
       </view>
       <view class="detail-item">
-        <text>联系我们</text>
+        <text>关于「读心专家」</text>
         <uni-icons type="right" size="15"></uni-icons>
       </view>
     </view>
