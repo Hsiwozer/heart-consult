@@ -78,9 +78,9 @@
     "list": [
       {
         "pagePath": "pages/knowledge/knowledge",
-        "text": "知识",
-        "iconPath": "static/tab_icons/zhishiku.png",
-        "selectedIconPath": "static/tab_icons/zhishiku-active.png"
+        "text": "首页",
+        "iconPath": "static/tab_icons/shouye.png",
+        "selectedIconPath": "static/tab_icons/shouye-active.png"
       },
       {
         "pagePath": "pages/consult/consult",

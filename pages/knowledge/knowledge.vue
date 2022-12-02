@@ -1,5 +1,6 @@
 <template>
   <view class="knowledge-container">
+
     <!-- 轮播图区域 -->
     <swiper :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000" :circular="true">
       <swiper-item>
@@ -50,6 +51,9 @@
       </view>
     </view>
     
+    
+    <!-- 返回顶部按钮 -->
+    <uni-icons type="top" size="30" class="backToTop" v-if="isShow" @click="goTop"></uni-icons>
   </view>
 </template>
 
@@ -59,7 +63,7 @@
     data() {
       return {
         isLoading: false,
-        // knowledgeList: []
+        isShow:false,
       };
     },
     computed: {
@@ -118,6 +122,16 @@
         this.getKnowledgeList(() => {
           uni.stopPullDownRefresh()
         })
+      },
+      onPageScroll(e) {
+        if (e.scrollTop >= 500) this.isShow = true
+        else this.isShow = false
+      },
+      goTop() {
+        uni.pageScrollTo({
+        	scrollTop: 0,
+        	duration: 300
+        })
       }
     }
   }
@@ -125,6 +139,7 @@
 
 <style lang="scss">
   .knowledge-container {
+    height: 100%;
     padding-bottom: 5px;
     background-color: #f8f8f8;
   }
@@ -212,5 +227,14 @@
       line-height: 80rpx;
       color: #fff;
     }
+  }
+  
+  .backToTop {
+    position: fixed;
+    bottom: 20px;
+    right: 10px;
+    border-radius: 30rpx;
+    box-shadow: 2px 2px 5px #eee;
+    padding: 10rpx;
   }
 </style>
