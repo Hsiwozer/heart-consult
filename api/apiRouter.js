@@ -181,6 +181,19 @@ router.get('/foot/clear', (req, res) => {
   })
 })
 
+// 获取证型症候的 API
+router.get('/syndrome/get', (req, res) => {
+  const sqlStr = 'select * from syndromes'
+  db.query(sqlStr, (err, results) => {
+    if (err) return console.log(err.message);
+    res.send({
+      status: 0,  // 0成功，1失败
+      msg: 'GET 请求成功！',
+      data: results
+    })
+  })
+})
+
 // 获取后台管理系统管理员的用户名密码信息（未实现）
 // router.post('/login', (req, res) => {
 //   const query = [req.query.username, req.query.password]
