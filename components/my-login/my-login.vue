@@ -73,7 +73,6 @@
     position: relative;
     overflow: hidden;
   
-    // 绘制登录盒子底部的半椭圆造型
     &::after {
       content: ' ';
       display: block;
@@ -91,7 +90,8 @@
       width: 90%;
       border-radius: 100px;
       margin: 15px 0;
-      background-color: #58c06f;
+      background: rgb(88,192,125);
+      background: linear-gradient(90deg, rgba(88,212,111,1) 30%, rgba(88,192,111,1) 100%);
     }
   
     .tips-text {

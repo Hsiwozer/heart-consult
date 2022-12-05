@@ -26,7 +26,7 @@
       async changeStarStatus(liked, id) {
         const dayjs = require("dayjs")
         let curDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
-        const { data: res } = await uni.$http.post(`/api/interaction/like?liked=${liked}&footTime=${curDate}&id=${id}`)
+        const { data: res } = await uni.$http.post(`/api/interaction/like?liked=${liked}&footTime=${curDate}&id=${id}`)        
         if(res.status !== 0) {
           return uni.showToast({
             title: '数据请求失败！',

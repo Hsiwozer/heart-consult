@@ -2,8 +2,10 @@
   <view class="setting-detail-container">
     <!-- logo、小程序名称区域 -->
     <view class="controduction">
-      <view class="logo"></view>
-      <text class="title">读心专家</text>
+      <view class="logo">
+        <image src="../../static/logo/logo_heart.png" mode="widthFix"></image>
+      </view>
+      <text class="title">护心专家</text>
       <text class="slogan">放心交给我们</text>
     </view>
     <!-- 关于、联系 -->
@@ -13,7 +15,7 @@
         <uni-icons type="right" size="15"></uni-icons>
       </view>
       <view class="detail-item">
-        <text>关于「读心专家」</text>
+        <text>关于「护心专家」</text>
         <uni-icons type="right" size="15"></uni-icons>
       </view>
     </view>
@@ -65,8 +67,11 @@
       .logo {
         width: 200rpx;
         height: 200rpx;
-        background-color: seagreen;
         border-radius: 100rpx;
+        overflow: hidden;
+        image {
+          width: 200rpx;
+        }
       }
       .title {
         font-size: 36rpx;
@@ -104,15 +109,15 @@
     }
     
     .logout {
-      // width: 90%;
       height: 50rpx;
       border-radius: 50rpx;
       padding: 15rpx 0;
       margin: 50rpx 50rpx 0;
-      background-color: #c00000;
       color: #fff;
       text-align: center;
       line-height: 50rpx;
+      background: rgb(192,0,0);
+      background: linear-gradient(90deg, rgba(192,80,0,1) 30%, rgba(192,0,0,1) 100%);
     }
   }
 </style>

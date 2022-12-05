@@ -11,33 +11,29 @@
         </uni-card>
       </uni-section>
       
-      <view class="tagGroup" v-if="isShowGroup">
-        <view class="tag-view" v-for="(item, index) in syndromes" :key="index">
-          <uni-tag :inverted="true" :text="item.element" type="primary" circle />
-        </view>
+      <view class="tagGroup">
+        <uni-tag v-for="(item, index) in this.showSyndromeInLogic" :key="index" inverted="true" :text="item[0].mainSyn" type="primary" circle="true" />
       </view>
-      
-      <button type="primary" hover-class="button-hover" class="btnHandler">下一组</button>
+
+      <button type="primary" class="btn" @click="btnHandler">下一组</button>
     </view>
     
   </view>
 </template>
 
 <script>
-  import { mapState, mapMutations, mapGetters } from 'vuex'
+  import { mapMutations, mapGetters } from 'vuex'
   export default {
     data() {
       return {
-        isShowPage: false,
-        isShowGroup: true,
+        isShowPage: false
       };
+    },
+    computed: {
+      ...mapGetters('m_syndromes', ['showSyndromeInLogic']),
     },
     onLoad() {
       this.getSyndromes()
-    },
-    computed: {
-      ...mapState('m_syndromes', ['syndromes']),
-      ...mapGetters('m_syndromes', ['showMainSyndrome']),
     },
     methods: {
       ...mapMutations('m_syndromes', ['updateSyndromes']),
@@ -52,6 +48,9 @@
         }
         this.updateSyndromes(res.data)
       },
+      btnHandler() {
+        console.log(this.showSyndromeInLogic);
+      }
     }
   }
 </script>
@@ -64,16 +63,20 @@
     .startPage {}
     .consultPage {
       .tagGroup {
+        display: flex;
+        flex-wrap: wrap;
         padding: 20rpx;
-        
-        .tag-view {
-          display: inline-block;
-          margin: 30rpx;
+        uni-tag {
+          margin: 20rpx;
         }
       }
       
-      .btnHandler {
+      .btn {
         width: 50%;
+        height: 48px;
+        background: rgb(0,163,255);
+        background: linear-gradient(90deg, rgba(0,165,255,1) 30%, rgba(0,105,255,1) 100%);
+        border-radius: 10px;
         transform: translateY(400rpx);
       }
     }
