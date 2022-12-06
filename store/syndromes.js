@@ -12,6 +12,19 @@ export default {
       state.main_syndromes = [...new Set(syndromes.map(item => {return item.main_syndrome}))]
     }
   },
+  actions: {
+    async getSyndromes({commit}) {
+      const { data: res } = await uni.$http.get('/api/syndrome/get')
+      if(res.status !== 0) {
+        return uni.showToast({
+          title: '数据请求失败！',
+          duration: 1500,
+          icon: 'none'
+        })
+      }
+      commit('updateSyndromes', res.data)
+    },
+  },
   
   getters: {
     showMainSyndrome: state => {

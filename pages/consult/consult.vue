@@ -11,9 +11,9 @@
         </uni-card>
       </uni-section>
       
-      <view class="tagGroup">
-        <uni-tag v-for="(item, index) in this.showSyndromeInLogic" :key="index" inverted="true" :text="item[0].mainSyn" type="primary" circle="true" />
-      </view>
+        <div class="tagView" v-for="(item1, index1) in syndromeList" :key="index1" v-if="item1.id === page">
+          <uni-tag v-for="(item2, index2) in item1.elements" :key="index2" inverted="true" :text="item2" type="primary" circle="true" ref="utag" @click.stop="changeStatus(index2)" />
+        </div>
 
       <button type="primary" class="btn" @click="btnHandler">下一组</button>
     </view>
@@ -26,30 +26,24 @@
   export default {
     data() {
       return {
-        isShowPage: false
+        isShowPage: false,
+        page: 1
       };
     },
     computed: {
       ...mapGetters('m_syndromes', ['showSyndromeInLogic']),
+      syndromeList: state => state.showSyndromeInLogic
     },
     onLoad() {
-      this.getSyndromes()
+      this.$store.dispatch('m_syndromes/getSyndromes')
     },
     methods: {
       ...mapMutations('m_syndromes', ['updateSyndromes']),
-      async getSyndromes() {
-        const { data: res } = await uni.$http.get('/api/syndrome/get')
-        if(res.status !== 0) {
-          return uni.showToast({
-            title: '数据请求失败！',
-            duration: 1500,
-            icon: 'none'
-          })
-        }
-        this.updateSyndromes(res.data)
-      },
       btnHandler() {
-        console.log(this.showSyndromeInLogic);
+        if(this.page < 8) this.page += 1
+      },
+      changeStatus(index) {
+        this.$refs.utag[index].inverted = !this.$refs.utag[index].inverted
       }
     }
   }
@@ -62,12 +56,12 @@
   .consult-container {
     .startPage {}
     .consultPage {
-      .tagGroup {
-        display: flex;
-        flex-wrap: wrap;
-        padding: 20rpx;
+      .tagView {
+        width: 80%;
+        margin: 0 auto;
         uni-tag {
-          margin: 20rpx;
+          display: inline-block;
+          margin: 25rpx;
         }
       }
       
@@ -77,7 +71,11 @@
         background: rgb(0,163,255);
         background: linear-gradient(90deg, rgba(0,165,255,1) 30%, rgba(0,105,255,1) 100%);
         border-radius: 10px;
-        transform: translateY(400rpx);
+        margin: 0 auto;
+        position: fixed;
+        bottom: 100rpx;
+        left: calc(50%);
+        transform: translateX(-50%);
       }
     }
   }
