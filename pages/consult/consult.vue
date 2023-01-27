@@ -11,9 +11,10 @@
         </uni-card>
       </uni-section>
       
-        <view class="tagView" v-for="(item1, index1) in syndromeList" :key="index1" v-if="item1.id === page">
-          <uni-tag v-for="(item2, index2) in item1.elements" :key="index2" :inverted="true" :text="item2" type="primary" circle="true" ref="utag" @click="setInverted(index2)" />
-        </view>
+
+      <view class="tagView" v-for="(item1, index1) in syndromeList" :key="index1" v-if="item1.id === page">
+        <uni-tag v-for="(item2, index2) in item1.elements" :key="index2" :inverted="true" :text="item2" type="primary" circle="true" ref="utag" @click="setInverted(index2)" />
+      </view>
         
       <view class="btnBox">
         <button type="primary" class="btn" @click="btnHandlerPrevious" v-if="page !== 1">上一组</button>
