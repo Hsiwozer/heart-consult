@@ -39,7 +39,8 @@ export default {
         const obj = new Object();
         obj.id = i;
         obj.mainSyn = state.main_syndromes[i - 1];
-        obj.elements = [...new Set(state.syndromes.map(item => {return (state.main_syndromes[i - 1] === item.main_syndrome ? item.element : '')}))];
+        obj.elements = [...new Set(state.syndromes.map(item => {return (state.main_syndromes[i - 1] === item.main_syndrome ? item.element : null)}))];
+        obj.elements = obj.elements.filter(item => item != null)
         res.push(obj)
       }
       return res;
