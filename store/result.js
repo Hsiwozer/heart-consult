@@ -105,22 +105,22 @@ export default {
       });
       
       // 以下来根据已有的子证型及分数，判断主证型及病情严重程度，得到结果为main_result
-      
       const result = [];
       data.forEach(item => {
         const { main, sub } = item;
-        const subSet = new Set(sub);
-        let totalScore = 0;
+        let score = 0;
+        let flag = 0
         sub_result.forEach(subItem => {
-          if (subSet.has(subItem.sub)) {
-            totalScore += subItem.score;
+          if (sub.includes(subItem.sub)) {
+            score += subItem.score;
+            flag += 1
           }
         });
-        if (subSet.size === sub_result.length) {
-          result.push({ main, score: totalScore });
+        if (score >= 8 && flag == 2) {
+          result.push({ main, score });
+          flag = 0
         }
       });
-      
       
       return result;
     }
