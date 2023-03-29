@@ -5,6 +5,10 @@ import Vue from 'vue'
 
 import store from './store/store.js'
 
+
+// import LazyRender from 'vue-lazy-render'
+// Vue.use(LazyRender)
+
 // 配置网络请求
 // 导入 $http 对象
 import { $http } from '@escook/request-miniprogram'

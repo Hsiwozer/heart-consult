@@ -23,7 +23,7 @@
       </view>
       <view class="pannel-item">
         <uni-icons custom-prefix="iconfont" type="icon-history" size="30"></uni-icons>
-        <text>问诊记录</text>
+        <text>病例</text>
       </view>
       <view class="pannel-item" @click="gotoSettingDetail">
         <uni-icons type="gear" size="30"></uni-icons>

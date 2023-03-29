@@ -9,6 +9,7 @@
     "jsonwebtoken": "^8.5.1",
     "mysql2": "^2.3.3",
     "vant": "^3.6.2",
+    "vue-lazy-render": "^1.0.20",
     "vuex": "^4.0.2"
   }
 }
