@@ -1,11 +1,33 @@
 <template>
   <view>
-    <view class="result" v-for="(item, index) in resultList" :key="index">
-      <view class="result-title">{{item.main}}</view>
-      <view class="result-level" style="color: #fffe00" v-if="item.score >= 8 && item.score <= 13">轻度</view>
-      <view class="result-level" style="color: #fd9b00" v-else-if="item.score >= 14 && item.score <= 19">中度</view>
+    <view class="result" v-for="(item1, index) in resultList" :key="index">
+      <view class="result-title">{{item1.main}}</view>
+      <view class="result-level" style="color: #fffe00" v-if="item1.score >= 8 && item1.score <= 13">轻度</view>
+      <view class="result-level" style="color: #fd9b00" v-else-if="item1.score >= 14 && item1.score <= 19">中度</view>
       <view class="result-level" style="color: #db2522" v-else>重度</view>
+      
+      <view class="treatment-box" v-for="(item2, index) in treatmentList" :key="index" v-if="item1.main === item2.disease">
+        <view class="treatment-detail">
+          <view class="title">临床表现</view>
+          <view class="content">{{item2.clinical}}</view>
+        </view>
+        <view class="treatment-detail">
+          <view class="title">治法</view>
+          <view class="content">{{item2.therapy}}</view>
+        </view>
+        <view class="treatment-detail">
+          <view class="title">方药</view>
+          <view class="content">{{item2.prescription}}</view>
+        </view>
+        <view class="treatment-detail">
+          <view class="title">中成药</view>
+          <view class="content">{{item2.medicine}}</view>
+        </view>
+      </view>
     </view>
+    
+    <view class="healthy" v-if="this.treatmentList.length === 0">您很健康！</view>
+    <view class="btn" @click="goBack(this.treatmentList)">知道了</view>
   </view>
 </template>
 
@@ -14,7 +36,12 @@
   export default {
     data() {
       return {
-
+        treatmentList: []
+      }
+    },
+    beforeMount(){
+      for (let i = 0; i < this.resultList.length; i++) {
+        this.getTreatmentList(this.resultList[i].main)
       }
     },
     computed: {
@@ -22,12 +49,37 @@
       resultList: state => state.showResult,
     },
     methods: {
-      
+      async getTreatmentList(disease) {
+        const { data: res } = await uni.$http.get(`/api/treatment/get?disease=${disease}`)
+        if(res.status !== 0) {
+          return uni.showToast({
+            title: '数据请求失败！',
+            duration: 1500,
+            icon: 'none'
+          })
+        }
+        this.treatmentList = [...this.treatmentList, ...res.data]
+      },
+      goBack(treatment) {
+        uni.switchTab({
+          url: '/pages/consult/consult'
+        })
+        if (treatment.length === 0) return
+        const dayjs = require("dayjs")
+        let curDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
+        for (let i = 0; i < treatment.length; i++) {
+          uni.$http.post(`/api/record?treatment=${treatment[i]}&time=${curDate}`)
+        }
+      }
     }
   }
 </script>
 
 <style  lang="scss">
+  html, body {
+    height: 100%;
+  }
+  
   .result-title {
     font-size: 88rpx;
     text-align: center;
@@ -43,4 +95,17 @@
     margin-right: 50rpx;
   }
 
+  .btn {
+    width: 144px;
+    height: 48px;
+    background: rgb(0,163,255);
+    background: linear-gradient(90deg, rgba(0,165,255,1) 30%, rgba(0,105,255,1) 100%);
+    border-radius: 10px;
+    margin: 30px auto;
+    color: #fff;
+    font-weight: 700;
+    font-size: 24px;
+    text-align: center;
+    line-height: 48px;
+  }
 </style>

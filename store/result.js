@@ -16,7 +16,7 @@ export default {
       state.syndromes = data
       state.main = [...new Set(data.map(item => {return item.main_syndrome}))]
       state.sub = [...new Set(data.map(item => {return item.sub_syndrome}))] 
-    }
+    },
   },
   
   actions: {
@@ -30,7 +30,7 @@ export default {
         })
       }
       commit('updateOrigin', res.data)
-    },
+    }
   },
   
   getters: {

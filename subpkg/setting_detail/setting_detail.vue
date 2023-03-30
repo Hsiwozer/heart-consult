@@ -43,10 +43,11 @@
         if (succ && succ.confirm) {
            this.updateUserInfo({})
            this.updateToken('')
+           uni.switchTab({
+             url: '/pages/my/my'
+           })
         }
-        uni.switchTab({
-          url: '/pages/my/my'
-        })
+        
       }
     }
   }

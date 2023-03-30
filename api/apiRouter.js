@@ -61,11 +61,6 @@ router.get('/scales/get', (req, res) => {
   })
 })
 
-// 修改点赞收藏数的API
-// router.post('/interaction_num/change', (req, res) => {
-//   const sqlStr = 'select * from knowledge_list where id=?'
-// })
-
 // 修改用户点赞行为的 API
 router.post('/interaction/like', (req, res) => {
   const sqlStr = 'update knowledge_list set liked=?, footTime=? where id=?'
@@ -192,6 +187,36 @@ router.get('/syndrome/get', (req, res) => {
       data: results
     })
   })
+})
+
+// 获取诊疗方法的 API
+router.get('/treatment/get', (req, res) => {
+  const sqlStr = 'select * from treatment where disease=?'
+  db.query(sqlStr, req.query.disease, (err, results) => {
+    if (err) return console.log(err.message);
+    res.send({
+      status: 0,  // 0成功，1失败
+      msg: 'GET 请求成功！',
+      data: results
+    })
+  })
+})
+
+// 将问诊记录写入数据库的 API
+router.post('/record', (req, res) => {
+  const sqlStr = 'insert into consult_record (disease, clinical, therapy, prescription, medicine, time) values (?, ?, ?, ?, ?, ?)'
+  const treatment = req.query.treatment
+  console.log(req.query);
+  const query = [treatment.disease, treatment.clinical, treatment.therapy, treatment.prescription, treatment.medicine, req.query.time]
+  console.log(query);
+  // db.query(sqlStr, query, (err, results) => {
+  //   if (err) return console.log(err.message);
+  //   res.send({
+  //     status: 0,
+  //     msg: 'POST 请求成功！',
+  //     data: results
+  //   })
+  // })
 })
 
 // 获取后台管理系统管理员的用户名密码信息（未实现）
