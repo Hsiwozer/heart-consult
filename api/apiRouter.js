@@ -204,19 +204,43 @@ router.get('/treatment/get', (req, res) => {
 
 // 将问诊记录写入数据库的 API
 router.post('/record', (req, res) => {
-  const sqlStr = 'insert into consult_record (disease, clinical, therapy, prescription, medicine, time) values (?, ?, ?, ?, ?, ?)'
-  const treatment = req.query.treatment
-  console.log(req.query);
-  const query = [treatment.disease, treatment.clinical, treatment.therapy, treatment.prescription, treatment.medicine, req.query.time]
-  console.log(query);
-  // db.query(sqlStr, query, (err, results) => {
-  //   if (err) return console.log(err.message);
-  //   res.send({
-  //     status: 0,
-  //     msg: 'POST 请求成功！',
-  //     data: results
-  //   })
-  // })
+  const sqlStr = 'insert into consult_record (disease, clinical, therapy, prescription, medicine, time) values (?,?,?,?,?,?)'
+  const body = req.body
+  const query = [body.disease, body.clinical, body.therapy, body.prescription, body.medicine, body.time]
+  db.query(sqlStr, query, (err, results) => {
+    if (err) return console.log(err.message);
+    res.send({
+      status: 0,
+      msg: 'POST 请求成功！',
+      data: results
+    })
+  })
+})
+
+// 获取数据库中的问诊记录的 API
+router.get('/record_detail/get', (req, res) => {
+  const sqlStr = 'select * from consult_record where id = ?'
+  db.query(sqlStr, req.query.id, (err, results) => {
+    if (err) return console.log(err.message);
+    res.send({
+      status: 0,  // 0成功，1失败
+      msg: 'GET 请求成功！',
+      data: results
+    })
+  })
+})
+
+// 获取详细的问诊记录的 API
+router.get('/recordlist/get', (req, res) => {
+  const sqlStr = 'select * from consult_record order by time DESC'
+  db.query(sqlStr, (err, results) => {
+    if (err) return console.log(err.message);
+    res.send({
+      status: 0,  // 0成功，1失败
+      msg: 'GET 请求成功！',
+      data: results
+    })
+  })
 })
 
 // 获取后台管理系统管理员的用户名密码信息（未实现）

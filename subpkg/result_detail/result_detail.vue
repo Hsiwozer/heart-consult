@@ -27,7 +27,7 @@
     </view>
     
     <view class="healthy" v-if="this.treatmentList.length === 0">您很健康！</view>
-    <view class="btn" @click="goBack(this.treatmentList)">知道了</view>
+    <view class="btn" @click="goBack($event ,treatmentList)">知道了</view>
   </view>
 </template>
 
@@ -60,15 +60,32 @@
         }
         this.treatmentList = [...this.treatmentList, ...res.data]
       },
-      goBack(treatment) {
+      // 将问诊结果写入数据库，并返回consult主页面
+      async goBack(e, treatment) {
         uni.switchTab({
           url: '/pages/consult/consult'
         })
         if (treatment.length === 0) return
         const dayjs = require("dayjs")
         let curDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
+        // console.log(treatment);
         for (let i = 0; i < treatment.length; i++) {
-          uni.$http.post(`/api/record?treatment=${treatment[i]}&time=${curDate}`)
+          const query = {
+            disease: treatment[i].disease,
+            clinical: treatment[i].clinical,
+            therapy: treatment[i].therapy,
+            prescription: treatment[i].prescription,
+            medicine: treatment[i].medicine,
+            time: curDate
+          }
+          const { data: res } = await uni.$http.post('/api/record', query)
+          if(res.status !== 0) {
+            return uni.showToast({
+              title: '数据请求失败！',
+              duration: 1500,
+              icon: 'none'
+            })
+          }
         }
       }
     }

@@ -21,7 +21,7 @@
         <uni-icons type="flag" size="30"></uni-icons>
         <text>足迹</text>
       </view>
-      <view class="pannel-item">
+      <view class="pannel-item" @click="gotoRecordList">
         <uni-icons custom-prefix="iconfont" type="icon-history" size="30"></uni-icons>
         <text>病例</text>
       </view>
@@ -65,6 +65,11 @@
       gotoFootDetail() {
         uni.navigateTo({
           url: '/subpkg/foot_detail/foot_detail'
+        })
+      },
+      gotoRecordList() {
+        uni.navigateTo({
+          url: '/subpkg/record_list/record_list'
         })
       }
     }
