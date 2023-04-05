@@ -46,7 +46,11 @@
         <view class="know_item" v-for="(item, index) in knowledgeList" :key="index" @click="gotoKnowledgeDetail(item.id)">
           <view class="ask">{{item.question}}</view>
           <view class="answer">{{item.answer}}</view>
-          <my-interaction :intSC="[item.liked, item.collected]"></my-interaction>
+          <!-- 点赞收藏状态显示模块 -->
+          <my-interaction :intSC="[item.liked, item.collected]" :key="new Date().getTime()"></my-interaction>
+          
+          <view class="browser" v-if="item.footTime">{{item.footTime.slice(0,10)}} 浏览过</view>
+          <view class="browser" v-else>未浏览</view>
         </view>
       </view>
     </view>
@@ -195,6 +199,7 @@
       margin-top: 10px;
       
       .know_item {
+        position: relative;
         height: 220rpx;
         background-color: #fff;
         margin-bottom: 5px;
@@ -215,6 +220,14 @@
           -webkit-box-orient: vertical;
           overflow: hidden;
           text-overflow: ellipsis;
+        }
+        
+        .browser {
+          position: absolute;
+          left: 15px;
+          bottom: 15px;
+          font-size: 12px;
+          color: gray;
         }
       }
     }

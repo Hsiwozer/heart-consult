@@ -11,7 +11,7 @@
     <!-- 关于、联系 -->
     <view class="detail-list">
       <view class="detail-item">
-        <text>意见反馈</text>
+        <text>功能介绍</text>
         <uni-icons type="right" size="15"></uni-icons>
       </view>
       <view class="detail-item">

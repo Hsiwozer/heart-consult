@@ -1,6 +1,6 @@
 <template>
   <view>
-    <!-- 点赞收藏数量模块 -->
+    <!-- 首页点赞收藏模块 -->
     <view class="interaction">
       <view class="like">
         <uni-icons type="hand-up" size="15" v-if="!intSC[0]"></uni-icons>
