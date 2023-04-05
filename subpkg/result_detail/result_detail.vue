@@ -1,5 +1,9 @@
 <template>
   <view>
+    <view class="remind">
+      <uni-icons type="info" size="12" color="#acaba9"></uni-icons>
+      <text>提示：本文内容仅作参考，不能代替面诊，如有不适请尽快线下就医！</text>
+    </view>
     <view class="result" v-for="(item1, index) in resultList" :key="index">
       <view class="result-title">{{item1.main}}</view>
       <view class="result-level" style="color: #fffe00" v-if="item1.score >= 8 && item1.score <= 13">轻度</view>
@@ -95,6 +99,15 @@
 <style  lang="scss">
   html, body {
     height: 100%;
+  }
+  
+  .remind {
+    margin-bottom: 10px;
+    
+    text {
+      font-size: 24rpx;
+      color: #acaba9;
+    }
   }
   
   .result-title {
