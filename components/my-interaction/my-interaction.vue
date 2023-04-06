@@ -3,12 +3,12 @@
     <!-- 首页点赞收藏模块 -->
     <view class="interaction">
       <view class="like">
-        <uni-icons type="hand-up" size="15" v-if="!intSC[0]"></uni-icons>
+        <uni-icons type="hand-up" size="15" color="gray" v-if="!intSC[0]"></uni-icons>
         <uni-icons type="hand-up-filled" size="15" color="#3c6ba3" v-else></uni-icons>
         
       </view>
       <view class="collect">
-        <uni-icons type="star" size="15" v-if="!intSC[1]"></uni-icons>
+        <uni-icons type="star" size="15" color="gray" v-if="!intSC[1]"></uni-icons>
         <uni-icons type="star-filled" size="15" color="#ffdb00" v-else></uni-icons>
         
       </view>

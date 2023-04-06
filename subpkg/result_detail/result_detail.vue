@@ -12,19 +12,19 @@
       
       <view class="treatment-box" v-for="(item2, index) in treatmentList" :key="index" v-if="item1.main === item2.disease">
         <view class="treatment-detail">
-          <view class="title">临床表现</view>
+          <view class="title">【临床表现】</view>
           <view class="content">{{item2.clinical}}</view>
         </view>
         <view class="treatment-detail">
-          <view class="title">治法</view>
+          <view class="title">【治法】</view>
           <view class="content">{{item2.therapy}}</view>
         </view>
         <view class="treatment-detail">
-          <view class="title">方药</view>
+          <view class="title">【方药】</view>
           <view class="content">{{item2.prescription}}</view>
         </view>
         <view class="treatment-detail">
-          <view class="title">中成药</view>
+          <view class="title">【中成药】</view>
           <view class="content">{{item2.medicine}}</view>
         </view>
       </view>
@@ -137,5 +137,22 @@
     font-size: 24px;
     text-align: center;
     line-height: 48px;
+  }
+  
+  .treatment-box {
+    .treatment-detail {
+      margin: 10px;
+      
+      .title {
+        font-size: 20px;
+        margin-bottom: 5px;
+      }
+      .content {
+        font-size: 16px;
+        margin-left: 10px;
+        margin-bottom: 20px;
+        color: #bdbdbd;
+      }
+    }
   }
 </style>

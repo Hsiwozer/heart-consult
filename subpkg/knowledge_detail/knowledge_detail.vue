@@ -19,7 +19,6 @@
         <uni-icons type="star-filled" size="30" color="#ffdb00" v-else></uni-icons>
       </view>
     </view>
-    
   </view>
 </template>
 
@@ -79,7 +78,11 @@
 </script>
 
 <style lang="scss">
+  html, body {
+    height: 100%;
+  }
   .knowledge_detail_container {
+    position: relative;
     padding: 30rpx;
     
     .remind {
@@ -92,12 +95,14 @@
     }
     
     .question {
-      font-size: 40rpx;
+      color: #1d1e22;
+      font-size: 44rpx;
       font-weight: bold;
       display: block;
       margin-bottom: 20rpx;
     }
     .answer {
+      color: #485767;
       font-size: 30rpx;
       line-height: 200%;
     }

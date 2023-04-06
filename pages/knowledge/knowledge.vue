@@ -162,7 +162,7 @@
     padding: 0 10px;
     
     text {
-      font-size: 40rpx;
+      font-size: 46rpx;
       font-weight: bold;
     }
     
@@ -191,7 +191,7 @@
     padding: 0 10px;
     
     text {
-      font-size: 40rpx;
+      font-size: 46rpx;
       font-weight: bold;
     }
     
@@ -201,15 +201,17 @@
       .know_item {
         position: relative;
         height: 220rpx;
-        background-color: #fff;
+        background: rgb(204,250,220);
+        background: linear-gradient(180deg, rgba(204,250,220,1) 0%, rgba(255,255,255,1) 50%);
         margin-bottom: 5px;
         padding: 15px;
         border-radius: 8px;
         
         .ask {
-          font-size: 30rpx;
+          font-size: 32rpx;
           font-weight: bold;
           margin-bottom: 10px;
+          color: #3fa061;
         }
         
         .answer {
