@@ -48,30 +48,45 @@
         this.id = id
       },
       async changeStarStatus(liked, id) {
-        const dayjs = require("dayjs")
-        let curDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
-        const { data: res } = await uni.$http.post(`/api/interaction/like?liked=${liked}&footTime=${curDate}&id=${id}`)        
-        if(res.status !== 0) {
-          return uni.showToast({
-            title: '数据请求失败！',
-            duration: 1500,
-            icon: 'none'
+        if (!uni.getStorageSync('token')) {
+          uni.switchTab({
+            url: '/pages/my/my'
           })
-        }
-        this.knowledge.liked = !this.knowledge.liked
+          uni.$showMsg('请先登录');
+        }else {
+          const dayjs = require("dayjs")
+          let curDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
+          const { data: res } = await uni.$http.post(`/api/interaction/like?liked=${liked}&footTime=${curDate}&id=${id}`)        
+          if(res.status !== 0) {
+            return uni.showToast({
+              title: '数据请求失败！',
+              duration: 1500,
+              icon: 'none'
+            })
+          }
+          this.knowledge.liked = !this.knowledge.liked
+        } 
       },
       async changeCollectStatus(collected, id) {
-        const dayjs = require("dayjs")
-        let curDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
-        const { data: res } = await uni.$http.post(`/api/interaction/collect?collected=${collected}&footTime=${curDate}&id=${id}`)
-        if(res.status !== 0) {
-          return uni.showToast({
-            title: '数据请求失败！',
-            duration: 1500,
-            icon: 'none'
+        if (!uni.getStorageSync('token')) {
+          uni.switchTab({
+            url: '/pages/my/my'
           })
+          uni.$showMsg('请先登录');
+        }else {
+          const dayjs = require("dayjs")
+          let curDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
+          const { data: res } = await uni.$http.post(`/api/interaction/collect?collected=${collected}&footTime=${curDate}&id=${id}`)
+          if(res.status !== 0) {
+            return uni.showToast({
+              title: '数据请求失败！',
+              duration: 1500,
+              icon: 'none'
+            })
+          }
+          this.knowledge.collected = !this.knowledge.collected
         }
-        this.knowledge.collected = !this.knowledge.collected
+
       }
     }
   }

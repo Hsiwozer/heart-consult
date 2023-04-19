@@ -125,6 +125,18 @@
     margin-right: 50rpx;
   }
 
+  .healthy {
+    font-size: 46px;
+    text-align: center;
+    margin: 20px;
+    padding: 10px 16px;
+    font-weight: bold;
+    background: rgb(34,193,195);
+    background: radial-gradient(circle, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+    background-clip: text;
+    color: transparent;
+  }
+  
   .btn {
     width: 144px;
     height: 48px;

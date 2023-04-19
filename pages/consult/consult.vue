@@ -13,9 +13,16 @@
     },
     methods: {
       gotoConsultDetail() {
-        uni.navigateTo({
+        if (!uni.getStorageSync('token')) {
+          uni.switchTab({
+            url: '/pages/my/my'
+          })
+          uni.$showMsg('请先登录');
+        }else {
+          uni.navigateTo({
           url: '/subpkg/consult_detail/consult_detail'
         })
+        }
       }
     }
   }
