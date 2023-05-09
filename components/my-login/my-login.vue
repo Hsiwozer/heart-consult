@@ -28,6 +28,7 @@
             this.updateUserInfo(res.userInfo)
             // uni.$showMsg('登录成功！');
             // console.log(res);
+            
             this.getToken(res)
           },
           fail: (res) => {
@@ -40,7 +41,6 @@
         const [err, res] = await uni.login().catch(err => err)
         // 判断是否 uni.login() 调用失败
         if (err || res.errMsg !== 'login:ok') return uni.$showError('登录失败！')
-      
         // 准备参数对象
         const query = {
           code: res.code,
@@ -49,13 +49,31 @@
           rawData: info.rawData,
           signature: info.signature
         }
-        // console.log(query);
+        // console.log(info.userInfo);
       
         // 换取 token
         const { data: loginResult } = await uni.$http.post('/api/users/wxlogin', query)
         // console.log(loginResult);
         if (loginResult.status !== 0) return uni.$showMsg('登录失败！')
-        // uni.$showMsg('登录成功')
+        uni.$showMsg('登录成功')
+        
+        const dayjs = require("dayjs")
+        let curDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
+        const query1 = {
+          nickName: info.userInfo.nickName,
+          language: info.userInfo.language,
+          gender: info.userInfo.gender,
+          status: 'login',
+          time: curDate
+        }
+        const { data: res1 } = await uni.$http.post('/api/userinfo', query1)
+        if(res1.status !== 0) {
+          return uni.showToast({
+            title: '数据请求失败！',
+            duration: 1500,
+            icon: 'none'
+          })
+        }
         this.updateToken(loginResult.token)
       }
     }

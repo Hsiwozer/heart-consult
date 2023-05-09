@@ -106,6 +106,33 @@
                 }
                 
                 }
+                ,{
+                    "path" : "userinfo_detail/userinfo_detail",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                ,{
+                    "path" : "function_introduction/function_introduction",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+                ,{
+                    "path" : "aboutus/aboutus",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
             ]
     }
   ],

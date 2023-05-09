@@ -12,6 +12,7 @@ export default {
     // 更新用户的基本信息
     updateUserInfo(state, userinfo) {
       state.userinfo = userinfo
+      
       // 通过 this.commit() 方法，调用 m_user 模块下的 saveUserInfoToStorage 方法，将 userinfo 对象持久化存储到本地
       this.commit('m_user/saveUserInfoToStorage')
     },
@@ -31,8 +32,14 @@ export default {
     // 将 token 字符串持久化存储到本地
     saveTokenToStorage(state) {
       uni.setStorageSync('token', state.token)
-    }
+    },
+    
+    
   },
   
-  getters: {}
+  getters: {
+    showUserInfo: state => {
+      return state.userinfo
+    },
+  }
 }

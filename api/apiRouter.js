@@ -49,17 +49,17 @@ router.get('/knowledge_detail/get', (req, res) => {
 })
 
 // 获取量表数据的API
-router.get('/scales/get', (req, res) => {
-  const sqlStr = 'select * from scales'
-  db.query(sqlStr, (err, results) => {
-    if (err) return console.log(err.message);
-    res.send({
-      status: 0,  // 0成功，1失败
-      msg: 'GET 请求成功！',
-      data: results
-    })
-  })
-})
+// router.get('/scales/get', (req, res) => {
+//   const sqlStr = 'select * from scales'
+//   db.query(sqlStr, (err, results) => {
+//     if (err) return console.log(err.message);
+//     res.send({
+//       status: 0,  // 0成功，1失败
+//       msg: 'GET 请求成功！',
+//       data: results
+//     })
+//   })
+// })
 
 // 修改用户点赞行为的 API
 router.post('/interaction/like', (req, res) => {
@@ -121,7 +121,22 @@ router.post('/users/wxlogin', (req, res) => {
   res.send({
     status: 0,
     msg: 'POST 请求成功！',
-    token: tokenStr
+    token: 'Bearer ' + tokenStr
+  })
+})
+
+// 将用户信息登录登出信息写入数据库的 API
+router.post('/userinfo', (req, res) => {
+  const sqlStr = 'insert into userInfo (nickName, language, gender, status, time) values (?,?,?,?,?)'
+  const body = req.body
+  const query = [body.nickName, body.language, body.gender, body.status, body.time]
+  db.query(sqlStr, query, (err, results) => {
+    if (err) return console.log(err.message);
+    res.send({
+      status: 0,
+      msg: 'POST 请求成功！',
+      data: results
+    })
   })
 })
 
@@ -176,7 +191,7 @@ router.get('/foot/clear', (req, res) => {
   })
 })
 
-// 获取证型症候的 API
+// 获取证型证候的 API
 router.get('/syndrome/get', (req, res) => {
   const sqlStr = 'select * from syndromes'
   db.query(sqlStr, (err, results) => {
@@ -242,19 +257,5 @@ router.get('/recordlist/get', (req, res) => {
     })
   })
 })
-
-// 获取后台管理系统管理员的用户名密码信息（未实现）
-// router.post('/login', (req, res) => {
-//   const query = [req.query.username, req.query.password]
-//   const sqlStr = 'select * from admin_info where username=? and password=?'
-//   db.query(sqlStr, query, (err, results) => {
-//     if (err) return console.log(err.message);
-//     res.send({
-//       status: 0,  // 0成功，1失败
-//       msg: 'POST 请求成功！',
-//       data: results
-//     })
-//   })
-// })
 
 module.exports = router

@@ -104,7 +104,7 @@ export default {
         }
       });
       
-      // 以下来根据已有的子证型及分数，判断主证型及病情严重程度，得到结果为main_result
+      // 以下来根据已有的子证型及分数，判断主证型及病情严重程度，得到结果为result
       const result = [];
       data.forEach(item => {
         const { main, sub } = item;

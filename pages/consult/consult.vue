@@ -1,6 +1,6 @@
 <template>
   <view class="consult-container">
-    <view class="startPage" @click="gotoConsultDetail">开始测试</view>
+    <view class="startPage" @click="gotoConsultDetail">开始问诊</view>
   </view>
 </template>
 

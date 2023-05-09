@@ -10,11 +10,15 @@
     </view>
     <!-- 关于、联系 -->
     <view class="detail-list">
-      <view class="detail-item">
+      <view class="detail-item" @click="gotoUserinfo">
+        <text>个人信息</text>
+        <uni-icons type="right" size="15"></uni-icons>
+      </view>
+      <view class="detail-item" @click="gotoFunctionIntro">
         <text>功能介绍</text>
         <uni-icons type="right" size="15"></uni-icons>
       </view>
-      <view class="detail-item">
+      <view class="detail-item" @click="gotoAboutus">
         <text>关于「护心专家」</text>
         <uni-icons type="right" size="15"></uni-icons>
       </view>
@@ -25,12 +29,16 @@
 </template>
 
 <script>
-  import { mapMutations } from 'vuex'
+  import { mapMutations, mapGetters } from 'vuex';
   export default {
     data() {
       return {
         
       };
+    },
+    computed: {
+      ...mapGetters('m_user', ['showUserInfo']),
+      userinfo: state => state.showUserInfo,
     },
     methods: {
       ...mapMutations('m_user', ['updateUserInfo', 'updateToken']),
@@ -41,6 +49,25 @@
         }).catch(err => err)
       
         if (succ && succ.confirm) {
+          // console.log(this.userinfo);
+          const dayjs = require("dayjs")
+          let curDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
+          const query = {
+            nickName: this.userinfo.nickName,
+            language: this.userinfo.language,
+            gender: this.userinfo.gender,
+            status: 'logout',
+            time: curDate
+          }
+          const { data: res } = await uni.$http.post('/api/userinfo', query)
+          if(res.status !== 0) {
+            return uni.showToast({
+              title: '数据请求失败！',
+              duration: 1500,
+              icon: 'none'
+            })
+          }
+          
            this.updateUserInfo({})
            this.updateToken('')
            uni.switchTab({
@@ -48,6 +75,21 @@
            })
         }
         
+      },
+      gotoUserinfo() {
+        uni.navigateTo({
+          url: '/subpkg/userinfo_detail/userinfo_detail'
+        })
+      },
+      gotoFunctionIntro() {
+        uni.navigateTo({
+          url: '/subpkg/function_introduction/function_introduction'
+        })
+      },
+      gotoAboutus() {
+        uni.navigateTo({
+          url: '/subpkg/aboutus/aboutus'
+        })
       }
     }
   }
